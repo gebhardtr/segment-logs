@@ -17,7 +17,7 @@ pip install pyspark
 ```
 
 #### Fetch data
-```
+```bash
 aws configure --profile lightspeed-telemetry
 export AWS_PROFILE=lightspeed-telemetry
 export AWS_S3_URL=s3://host/prefix
@@ -25,23 +25,23 @@ aws s3 sync $AWS_S3_URL data/raw
 ```
 
 #### (Optional) Extract local data and cache (for better local performance)
-```
+```bash
 find data/raw -type f | parallel --bar 'gzcat {} | jq -c "."' > data/all.jsonl
 ```
 
 #### Start PySpark
-```
+```bash
 pyspark
 ```
 
 #### Process data in PySpark
-```
+```python
 spark.conf.set("spark.sql.debug.maxToStringFields", 1000)
 df_all = spark.read.json("./data/all.jsonl")
 ```
 
 #### Example query
-```
+```python
 from pyspark.sql.functions import col
 
 completions = df_all.alias("completions").alias("completions")

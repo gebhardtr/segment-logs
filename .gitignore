@@ -2,3 +2,5 @@
 .ipynb*/
 .tox/
 data/
+*.log
+metastore_db/
